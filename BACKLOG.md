@@ -1,4 +1,5 @@
 # Backlog (see AGENTS.md)
+- [2026-03-02] Disallow zoom in mobile frontend
 - [2026-03-02] Pin all deps versions
 - [2026-03-02] Pin opencode version, plus add a skill for what to do when upgrading opencode (e.g. check changelog for api changes)
 - [2026-03-02] Mobile is totally broken since rewrite?
