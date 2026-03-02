@@ -834,7 +834,6 @@ function renderModelPicker() {
   }
 
   const favoriteModels = allModels.filter((x) => favs.includes(x.key));
-  const restModels = allModels.filter((x) => !favs.includes(x.key));
 
   function renderModelItem(providerID, m, name, isFav) {
     const active = selectedModel?.providerID === providerID && selectedModel?.modelID === m.id ? " active" : "";
@@ -851,13 +850,13 @@ function renderModelPicker() {
     for (const x of favoriteModels) html += renderModelItem(x.provider.id, x.model, x.name, true);
   }
   const grouped = new Map();
-  for (const x of restModels) {
+  for (const x of allModels) {
     if (!grouped.has(x.provider.id)) grouped.set(x.provider.id, { provider: x.provider, models: [] });
     grouped.get(x.provider.id).models.push(x);
   }
   for (const [, group] of grouped) {
     html += `<div class="model-provider">${esc(group.provider.name)}</div>`;
-    for (const x of group.models) html += renderModelItem(group.provider.id, x.model, x.name, false);
+    for (const x of group.models) html += renderModelItem(group.provider.id, x.model, x.name, favs.includes(x.key));
   }
   if (!html) html = '<div class="session-empty">No models match</div>';
   container.innerHTML = html;
