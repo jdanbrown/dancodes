@@ -34,14 +34,7 @@ export function ChatView() {
   }
 
   if (!currentRepo) {
-    return (
-      <div className="chat-view">
-        <div className="empty-state">
-          <div className="empty-title">dancodes</div>
-          <div className="empty-subtitle">Select a repo to get started</div>
-        </div>
-      </div>
-    );
+    return <div className="chat-view" />;
   }
 
   if (!currentSessionId) {
