@@ -73,6 +73,7 @@ button {
   cursor: pointer;
   padding: 0.2rem 0.4rem;
   font-size: 16px;
+  flex-shrink: 0;
 }
 .top-bar-btn:hover {
   color: var(--text);
@@ -107,11 +108,13 @@ button {
 .top-bar-version {
   color: var(--dim);
   font-size: 10px;
+  flex-shrink: 0;
 }
 .top-bar-link {
   color: var(--dim);
   text-decoration: none;
   font-size: 11px;
+  flex-shrink: 0;
 }
 .top-bar-link:hover {
   color: var(--text);
