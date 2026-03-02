@@ -1,20 +1,17 @@
 # Backlog (see AGENTS.md)
-- [2026-03-02] Use a frontend framework (before we dive into building out a ton of features and fixes)
-- [2026-03-02] Disallow zoom in mobile frontend
+- [2026-03-02] Three-dots menu in chat header: copy branch (with branch name inline), share session, rename session, show git stat/diff
+- [2026-03-02] Mode picker in input area (build/plan/etc)
+- [2026-03-02] Photo upload in input area
 - [2026-03-02] Pin all deps versions
 - [2026-03-02] Pin opencode version, plus add a skill for what to do when upgrading opencode (e.g. check changelog for api changes)
 - [2026-03-02] Add buttons to show git status/diff/log in chat session
 - [2026-03-02] Figure out how to connect from opencode cli — i think custom auth currently defeats it?
-- [2026-03-02] Fuse Stop button into Send button — don't need two buttons in two faraway places, just make them two states of the same button
 - [2026-03-02] Add opt+enter for newline in edit box — currently have shift+enter which we want to keep, but opt+enter sometimes gets used too and currently sends the msg
 - [2026-03-02] Fix dev/check in prod — currently missing a bunch of deps
 - [2026-03-02] Iron out git commit/push flow
   - Author is still whack
   - Worktrees require branches, but we don't want to think about branches yet. Currently they're all using a throwaway local branch and pushing to origin/main
 - [2026-03-02] Don't show subagent sessions in sidebar — how should we show them? (click to view?)
-- [2026-03-02] In chat, focus input box after hitting enter (currently unfocuses, which is very annoying)
-- [2026-03-02] Show "updated at" + "created at" per session in sidebar
-- [2026-03-02] Remove placeholder text in chat input box
 - [2026-03-02] Allow typing input while LLM is in progress — what should it do if you hit enter? What does OpenCode CLI do? That'd be a good UX to mimic if feasible
 - [2026-03-01] Update formatting on backend python logging to be not horribly ugly and hard to read
 - [2026-02-28] Frontend debug log panel — intercept console.log, show in a scrollable panel in the UI, easy to copy/paste from phone for diagnostics

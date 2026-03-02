@@ -121,11 +121,25 @@ Auto-generated OpenAPI docs at `/admin/docs`.
 - Even if web frontend is throwaway, it smooths out API/backend issues
 
 ### Custom frontend
-- Mobile-friendly responsive web app
+- Mobile-first responsive web app (React + Vite + TypeScript)
 - Talks to opencode REST + SSE API at `/` (same origin, no prefix)
 - Talks to sidecar API for git/resource management at `/admin/*`
 - **Concurrent chats**: fire off multiple chats, monitor progress from the sidebar (status, activity), dive into any chat to see details — all from one tab
 - Concurrency: multiple tabs/reconnects → broadcast pattern, last-write-wins on input
+
+### Frontend design
+- Mobile-first — opencode CLI is the UX grounding, adapted to a mobile flow
+- "Pick repo" → "pick/create chat session" is top-level in the UX, persisted client-side
+- On page load, drop the user into a focused text box: restore last-used repo, pick most recent chat. Only exception: no last-used repo and no repos on disk — don't auto-clone anything. Show a "+" button in the top right so it's easy to create a new chat if the restored one isn't what they want
+- Sidebar is a key UX component: swipe gestures to show/hide (in addition to buttons/taps)
+- No zoom on mobile — focusing inputs must not zoom the page
+- Input area groups: send/stop button, model picker, opencode mode picker (build/plan/etc), upload photo
+- "Scroll to bottom" button when scrolled up in chat; auto-follow new content when scroll is at the bottom (standard chat app idiom)
+- Three-dots menu (upper right) for misc actions: copy branch (with branch name inline), share session, rename session, show git stat/diff
+- Messages are left-aligned like opencode CLI (not alternating left/right like SMS)
+- Large model output chunks (tool output, code diffs) shown in full by default, with option to tap-collapse. Don't hide info by default.
+- Top bar: version string, link to opencode web. No liveness dots.
+- Style: pure black (#000) background, shades of gray for contrast. Consolas monospace font everywhere.
 
 ## Implementation notes
 

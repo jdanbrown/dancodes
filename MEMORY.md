@@ -11,6 +11,16 @@
 - 2026-02-28 32452fe
 
 ## Memory log
+- [2026-03-02] Frontend rewrite: vanilla JS → React + Vite + TypeScript
+  - Source in `frontend/src/`, built to `frontend/dist/` via `npx vite build frontend/`
+  - Caddy serves `frontend/dist/` (not `frontend/` directly)
+  - Dockerfile runs `npx vite build frontend/` after `COPY . .`
+  - `dev/check` runs: `tsc --noEmit`, `biome check`, and `vite build`
+  - State management: `useSyncExternalStore` over a plain mutable object (no Context/Redux)
+  - biome.json targets `frontend/src/**/*.{ts,tsx,css}` (not `frontend/**/*.js` anymore)
+  - Disabled a11y lint rules (useButtonType, noStaticElementInteractions, useKeyWithClickEvents) — overkill for personal mobile-first app
+- [2026-03-01] Frontend rendering pitfall (DEFUNCT — React handles this now)
+  - ~~Don't DOM-append elements into a container that gets rebuilt via innerHTML~~
 - [2026-03-01] `GET /session/status` returns `{ sessionID: { type: "idle"|"busy"|"retry" } }` for all sessions
   - Scoped per-directory (like all opencode endpoints), so needs `x-opencode-directory` header
   - Use this to get initial busy/idle state on page load — SSE only delivers future state changes, not current state
@@ -34,8 +44,7 @@
   - `--print-logs` required to see logs on stderr (otherwise logs go to `~/.local/share/opencode/log/` only)
   - Treats CWD as project root — we now start it in `/tmp/opencode-no-project` so any request missing `x-opencode-directory` fails loudly
   - `HOME` is used as starting dir for opencode web UI's "Open project" folder picker — set it to `/vol/projects/worktrees` so worktrees are discoverable
-- [2026-03-01] Frontend rendering pitfall
-  - Don't DOM-append elements (e.g. error messages) into a container that gets rebuilt via `innerHTML =` on the next event — they get wiped. Store everything in state and render from state.
+- [2026-03-01] ~~Frontend rendering pitfall~~ (DEFUNCT — React handles this now)
 - [2026-02-28] Replaced bun with real node in Dockerfile
   - Previously: bun installed, `ln -s bun node` to satisfy opencode's `#!/usr/bin/env node` shebang
   - Now: real node via nodesource apt repo, no bun — same `node`/`npm`/`npx` commands in local dev and prod

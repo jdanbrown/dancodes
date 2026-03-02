@@ -16,6 +16,8 @@ show_cmd ruff check .
 show_cmd ruff format --check .
 show_cmd pyright
 
-# Frontend (ts, css)
+# Frontend (ts, tsx, css)
 [ -f node_modules/.package-lock.json ] || show_cmd npm install
-show_cmd npx biome check frontend/
+show_cmd npx tsc --noEmit -p frontend/tsconfig.json
+show_cmd npx biome check frontend/src/
+show_cmd npx vite build frontend/

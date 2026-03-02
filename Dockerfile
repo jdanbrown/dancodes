@@ -49,6 +49,9 @@ RUN python3 -m venv sidecar/.venv \
 COPY . .
 RUN chmod a+x bin/*
 
+# Build frontend (Vite outputs to frontend/dist/)
+RUN npx vite build frontend/
+
 # Bake git version info (set by --build-arg in CI, defaults to 'dev')
 ARG GIT_SHA=dev
 ARG GIT_TIME=unknown

@@ -3,4 +3,4 @@ set -eu
 
 bin="$(dirname "$0")"
 
-DOCKER_OPTS="${DOCKER_OPTS:-} --entrypoint bash" "$bin/docker-run" "$@"
+DOCKER_OPTS="${DOCKER_OPTS:-} --entrypoint bash" DOCKER_NO_PORT=true "$bin/docker-run" "$@"
