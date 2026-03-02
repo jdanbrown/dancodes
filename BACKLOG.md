@@ -1,4 +1,10 @@
 # Backlog (see AGENTS.md)
+- [2026-03-02] Fuse Stop button into Send button — don't need two buttons in two faraway places, just make them two states of the same button
+- [2026-03-02] Add opt+enter for newline in edit box — currently have shift+enter which we want to keep, but opt+enter sometimes gets used too and currently sends the msg
+- [2026-03-02] Fix dev/check in prod — currently missing a bunch of deps
+- [2026-03-02] Iron out git commit/push flow
+  - Author is still whack
+  - Worktrees require branches, but we don't want to think about branches yet. Currently they're all using a throwaway local branch and pushing to origin/main
 - [2026-03-01] Update formatting on backend python logging to be not horribly ugly and hard to read
 - [2026-02-28] Frontend debug log panel — intercept console.log, show in a scrollable panel in the UI, easy to copy/paste from phone for diagnostics
 - [2026-02-25] Close the dev loop
