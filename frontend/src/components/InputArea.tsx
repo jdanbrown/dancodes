@@ -31,16 +31,6 @@ export function InputArea() {
     setText("");
   }, [text, currentSessionId]);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" && !e.shiftKey && !e.altKey) {
-        e.preventDefault();
-        handleSend();
-      }
-    },
-    [handleSend],
-  );
-
   if (!currentSessionId) return null;
 
   return (
@@ -54,14 +44,7 @@ export function InputArea() {
         </div>
       </div>
       <div className="prompt-row">
-        <textarea
-          ref={textareaRef}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={handleKeyDown}
-          rows={1}
-          disabled={busy}
-        />
+        <textarea ref={textareaRef} value={text} onChange={(e) => setText(e.target.value)} rows={1} />
         {busy ? (
           <button className="btn send-btn stop" onClick={abortSession}>
             &#9632; Stop

@@ -1,15 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  cloneAndSelectRepo,
-  loadRepoPickerData,
-  selectRepo,
-  setSidebarOpen,
-  startNewSession,
-  useStore,
-} from "../lib/store";
+import { cloneAndSelectRepo, loadRepoPickerData, selectRepo, setSidebarOpen, useStore } from "../lib/store";
 
 export function TopBar() {
-  const { sidebarOpen, currentRepo, sessions, currentSessionId } = useStore();
+  const { sidebarOpen, sessions, currentSessionId } = useStore();
 
   const currentSession = sessions.find((s) => s.id === currentSessionId);
   const sessionLabel = currentSession?.title || (currentSessionId ? currentSessionId.slice(0, 14) : null);
@@ -24,12 +17,7 @@ export function TopBar() {
         {sessionLabel && <div className="top-bar-session">{sessionLabel}</div>}
       </div>
       <span className="top-bar-spacer" />
-      <span
-        className={`top-bar-btn ${!currentRepo ? "disabled" : ""}`}
-        onClick={() => currentRepo && startNewSession()}
-      >
-        +
-      </span>
+      <EnvToggle />
     </div>
   );
 }
@@ -82,7 +70,7 @@ function RepoPickerInline() {
     }
   }
 
-  const label = currentRepo ? currentRepo.name.split("/").pop() : "Select repo...";
+  const label = currentRepo ? currentRepo.name.split("/").pop() : "(Select repo...)";
 
   return (
     <div className="top-bar-repo-picker" ref={pickerRef}>
@@ -117,5 +105,20 @@ function RepoPickerInline() {
         </div>
       )}
     </div>
+  );
+}
+
+const PROD_URL = "https://dancodes.fly.dev/";
+const DEV_URL = "http://dans-macbook-pro.local:8080/";
+
+function EnvToggle() {
+  const origin = `${window.location.origin}/`;
+  const label = origin === PROD_URL ? "prod" : origin === DEV_URL ? "dev" : "unknown";
+  const target = label === "prod" ? DEV_URL : PROD_URL;
+
+  return (
+    <span className="top-bar-btn env-toggle" onClick={() => window.location.assign(target)}>
+      {label}
+    </span>
   );
 }

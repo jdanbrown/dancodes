@@ -1,4 +1,4 @@
-import { selectSession, sortedSessions, timeAgo, useStore } from "../lib/store";
+import { selectSession, sortedSessions, startNewSession, timeAgo, useStore } from "../lib/store";
 import type { Repo } from "../lib/types";
 
 export function Sidebar() {
@@ -13,11 +13,20 @@ export function Sidebar() {
         currentRepo={currentRepo}
       />
       <div className="sidebar-footer">
-        {version && <span className="sidebar-footer-version">dancodes {version}</span>}
-        {opencodeVersion && <span className="sidebar-footer-version">opencode {opencodeVersion}</span>}
-        <a className="sidebar-footer-link" href="https://app.opencode.ai" target="_blank" rel="noreferrer">
-          app.opencode.ai &#8599;
-        </a>
+        <div className="sidebar-footer-row">
+          <div className="sidebar-footer-versions">
+            {version && <span className="sidebar-footer-version">dancodes {version}</span>}
+            {opencodeVersion && <span className="sidebar-footer-version">opencode {opencodeVersion}</span>}
+            <a className="sidebar-footer-link" href="https://app.opencode.ai" target="_blank" rel="noreferrer">
+              app.opencode.ai &#8599;
+            </a>
+          </div>
+          {currentRepo && (
+            <span className="sidebar-new-btn" onClick={() => startNewSession()}>
+              +
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

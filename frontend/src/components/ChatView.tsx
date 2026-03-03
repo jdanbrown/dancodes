@@ -158,11 +158,13 @@ function ToolPartView({ part }: { part: MessagePart }) {
 
   const title = st.title ?? part.tool ?? "tool";
   const status = st.status;
+  const command = part.tool === "bash" ? (st.input?.command as string | undefined) : undefined;
 
   if (status === "pending" || status === "running") {
     return (
       <div className="msg-part tool running">
         {title} <span className="cursor" />
+        {command && <div className="tool-command">$ {command}</div>}
       </div>
     );
   }
@@ -171,6 +173,7 @@ function ToolPartView({ part }: { part: MessagePart }) {
     return (
       <div className="msg-part tool errored">
         <div className="tool-title">{title}</div>
+        {command && <div className="tool-command">$ {command}</div>}
         <div className="tool-error">{st.error ?? "error"}</div>
       </div>
     );
@@ -184,7 +187,12 @@ function ToolPartView({ part }: { part: MessagePart }) {
         <span className="tool-title">{title}</span>
         <span className="tool-collapse-hint">{collapsed ? "show" : "hide"}</span>
       </div>
-      {!collapsed && output && <div className="tool-output">{output}</div>}
+      {!collapsed && (
+        <>
+          {command && <div className="tool-command">$ {command}</div>}
+          {output && <div className="tool-output">{output}</div>}
+        </>
+      )}
     </div>
   );
 }

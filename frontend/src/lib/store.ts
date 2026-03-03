@@ -169,7 +169,7 @@ export async function loadSessions() {
   if (!state.currentRepo) return;
   try {
     const [sessionData, wtData] = await Promise.all([
-      get("/session", { directory: state.currentRepo.path }),
+      get("/session?roots=true", { directory: state.currentRepo.path }),
       get("/admin/worktrees"),
     ]);
     state.sessions = Array.isArray(sessionData)
@@ -517,7 +517,7 @@ function handleEvent(raw: string) {
     if (info) {
       const idx = state.sessions.findIndex((s) => s.id === info.id);
       if (idx >= 0) state.sessions[idx] = info;
-      else if (type === "session.created") state.sessions.unshift(info);
+      else if (type === "session.created" && !info.parentID) state.sessions.unshift(info);
       emit();
     }
   }
@@ -622,7 +622,7 @@ export async function initApp() {
   loadVersion();
   loadProviders();
 
-  // Restore last repo — trust localStorage, don't gate on /admin/repos succeeding
+  // Restore last repo, but verify it still exists on the backend
   const savedRepo = loadLastRepo();
   if (savedRepo) {
     state.currentRepo = savedRepo;
@@ -630,21 +630,29 @@ export async function initApp() {
     try {
       const data = (await get("/admin/repos")) as { repos?: Repo[] };
       state.clonedRepos = data?.repos ?? [];
+      if (!state.clonedRepos.find((r) => r.name === savedRepo.name)) {
+        console.warn("initApp: saved repo no longer cloned, clearing:", savedRepo.name);
+        state.currentRepo = null;
+        emit();
+        return;
+      }
     } catch (e) {
       console.warn("initApp: failed to load repos:", e);
     }
-    try {
-      await loadSessions();
-      const savedSession = loadLastSession();
-      const sorted = sortedSessions();
-      const resumeId = sorted.find((s) => s.id === savedSession)?.id ?? sorted[0]?.id;
-      if (resumeId) {
-        await selectSession(resumeId);
+    if (state.currentRepo) {
+      try {
+        await loadSessions();
+        const savedSession = loadLastSession();
+        const sorted = sortedSessions();
+        const resumeId = sorted.find((s) => s.id === savedSession)?.id ?? sorted[0]?.id;
+        if (resumeId) {
+          await selectSession(resumeId);
+        }
+      } catch (e) {
+        console.warn("initApp: failed to load sessions:", e);
       }
-    } catch (e) {
-      console.warn("initApp: failed to load sessions:", e);
+      syncSSE();
     }
-    syncSSE();
   }
   emit();
 }

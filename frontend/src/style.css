@@ -9,8 +9,8 @@
   --bg2: #0a0a0a;
   --bg3: #151515;
   --border: #222;
-  --text: #ccc;
-  --dim: #666;
+  --text: #e5e5e5;
+  --dim: #888;
   --blue: #58a6ff;
   --green: #3fb950;
   --red: #f85149;
@@ -81,6 +81,12 @@ button {
 .top-bar-btn.disabled {
   opacity: 0.25;
   cursor: default;
+}
+.env-toggle {
+  font-size: 11px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
 }
 .top-bar-info {
   display: flex;
@@ -174,14 +180,23 @@ button {
 }
 .sidebar-footer {
   margin-top: auto;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
   font-size: 11px;
   color: var(--dim);
+  flex-shrink: 0;
+}
+.sidebar-footer-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.sidebar-footer-versions {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  flex-shrink: 0;
+  min-width: 0;
 }
 .sidebar-footer-link {
   color: var(--dim);
@@ -195,6 +210,24 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.sidebar-new-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+  color: var(--dim);
+  cursor: pointer;
+  line-height: 1;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-new-btn:hover {
+  color: var(--text);
+  border-color: var(--dim);
 }
 
 /* --- Session list --- */
@@ -368,6 +401,13 @@ button {
   font-size: 10px;
   color: var(--dim);
   margin-left: auto;
+}
+.tool-command {
+  color: var(--text);
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 0.2rem;
 }
 .tool-output {
   color: var(--dim);

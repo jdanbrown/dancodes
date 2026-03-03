@@ -21,6 +21,7 @@ export interface Session {
   id: string;
   title?: string;
   directory?: string;
+  parentID?: string;
   time_updated?: number;
   timeUpdated?: number;
 }
@@ -55,6 +56,7 @@ export interface MessagePart {
 export interface ToolState {
   status: "pending" | "running" | "completed" | "error";
   title?: string;
+  input?: Record<string, unknown>;
   output?: string;
   error?: string;
 }
