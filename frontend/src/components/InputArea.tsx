@@ -1,3 +1,4 @@
+import { Search } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { loadFavorites, modelKey } from "../lib/storage";
 import { abortSession, pickModel, sendPrompt, toggleFavorite, useStore } from "../lib/store";
@@ -136,13 +137,10 @@ function ModelPicker({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="model-picker-dropdown">
-      <input
-        ref={searchRef}
-        className="picker-search"
-        placeholder="Search models..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      <div className="picker-search-wrap">
+        <Search className="picker-search-icon" />
+        <input ref={searchRef} className="picker-search" value={query} onChange={(e) => setQuery(e.target.value)} />
+      </div>
       <div className="picker-list">
         {favoriteModels.length > 0 && (
           <>

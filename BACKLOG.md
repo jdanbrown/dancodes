@@ -1,6 +1,4 @@
 # Backlog (see AGENTS.md)
-- [2026-03-03] Persist backend state in local dev/docker-run (chat sessions, repos/worktrees)
-  - Is ~/.local/share/ appropriate? /tmp gets wiped on reboot
 - [2026-03-03] Make different favicon (for mobile home screen icon)
 - [2026-03-03] Fix: Scroll in chat doesn't follow when new content appears (only follow when scroll is at bottom, don't jank if scrolled up somewhere)
 - [2026-03-03] Default model and favorite models keeps reverting — should all be client-side state, right?

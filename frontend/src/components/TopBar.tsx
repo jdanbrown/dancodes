@@ -1,3 +1,4 @@
+import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { cloneAndSelectRepo, loadRepoPickerData, selectRepo, setSidebarOpen, useStore } from "../lib/store";
 
@@ -79,13 +80,10 @@ function RepoPickerInline() {
       </span>
       {open && (
         <div className="top-bar-repo-dropdown">
-          <input
-            ref={searchRef}
-            className="picker-search"
-            placeholder="Search repos..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+          <div className="picker-search-wrap">
+            <Search className="picker-search-icon" />
+            <input ref={searchRef} className="picker-search" value={query} onChange={(e) => setQuery(e.target.value)} />
+          </div>
           <div className="picker-list">
             {repos.length === 0 && (
               <div className="picker-empty">{githubRepos.length === 0 && !query ? "Loading..." : "No repos found"}</div>

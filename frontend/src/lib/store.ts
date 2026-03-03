@@ -162,6 +162,9 @@ export async function selectRepo(repo: Repo) {
   saveLastRepo(repo);
   emit();
   await loadSessions();
+  if (state.sessions.length === 0) {
+    await startNewSession();
+  }
   syncSSE();
 }
 
@@ -647,6 +650,8 @@ export async function initApp() {
         const resumeId = sorted.find((s) => s.id === savedSession)?.id ?? sorted[0]?.id;
         if (resumeId) {
           await selectSession(resumeId);
+        } else {
+          await startNewSession();
         }
       } catch (e) {
         console.warn("initApp: failed to load sessions:", e);

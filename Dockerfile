@@ -32,18 +32,19 @@ RUN ARCH=$(dpkg --print-architecture) \
 # Install opencode
 RUN npm install -g opencode-ai@latest
 
-# Setup node deps
-# - Restrict COPY to just package.json, because `COPY . .` busts cache on _any_ file change -- annoying in dev
-COPY package.json .
-RUN npm install
-
-# Setup python venv
+# Install python deps
 # - Restrict COPY to just requirements.txt, because `COPY . .` busts cache on _any_ file change -- annoying in dev
 # - Precompile .pyc at build time so the slow shared CPU doesn't have to at startup
 COPY requirements.txt .
 RUN python3 -m venv sidecar/.venv \
   && sidecar/.venv/bin/pip install --no-cache-dir -r requirements.txt \
   && python3 -m compileall -q sidecar/.venv
+
+# Install node deps
+# - Restrict COPY to just package.json, because `COPY . .` busts cache on _any_ file change -- annoying in dev
+# - After python deps, since node deps will change more often
+COPY package.json .
+RUN npm install
 
 # Copy project dir
 COPY . .

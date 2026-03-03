@@ -17,17 +17,26 @@ if isatty; then
   DOCKER_OPTS="${DOCKER_OPTS:-} -it"
 fi
 
+# Persistent local volume dir for dev, to simulate the persistent fly volume we use in prod (see fly.toml)
+# - Use ~/.local/ so it survives macos reboots (unlike /tmp)
+# - Make up ~/.local/vol/ because we aren't really an XDG app
+LOCAL_VOL_DIR="$HOME/.local/vol/dancodes"
+mkdir -p "$LOCAL_VOL_DIR"
+
 show_cmd docker run \
     --rm \
     `[ -z "${DOCKER_NO_PORT:-}" ] && echo "-p 8080:8080"` \
+    -v "$LOCAL_VOL_DIR":'/vol' \
+    -v '/tmp':'/tmp' \
+    -v "$PWD":"$PWD":ro \
     -e AUTH_PASSWORD='dev' \
     -e AUTH_SECRET='dancodes-dev-secret' \
     -e GITHUB_USER="$GITHUB_USER" \
     -e GITHUB_TOKEN="$GITHUB_TOKEN" \
     -e OPENROUTER_API_KEY="$OPENROUTER_API_KEY" \
     -e CONTEXT7_API_KEY="$CONTEXT7_API_KEY" \
-    -v /tmp:/tmp \
-    -v "$PWD":"$PWD":ro \
+    -e OPENCODE_HOME='/vol/opencode-state' \
+    -e OPENCODE_CONFIG='/opt/dancodes/opencode.json' \
     -w "$PWD" \
     ${DOCKER_OPTS:-} \
     'dancodes' \
