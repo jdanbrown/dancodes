@@ -170,7 +170,6 @@ class CloneRequest(BaseModel):
 class WorktreeRequest(BaseModel):
     repo: str
     session_id: str
-    branch: str = "main"
 
 
 # --- Repo endpoints ---
@@ -266,14 +265,19 @@ def create_worktree(req: WorktreeRequest) -> dict[str, str]:
     if os.path.exists(dest):
         return {"status": "exists", "path": dest}
     os.makedirs(os.path.dirname(dest), exist_ok=True)
+    # Fetch so worktree starts from latest remote state, not stale local main
+    fetch = _run(["git", "fetch", "origin"], cwd=repo)
+    if fetch.returncode != 0:
+        raise HTTPException(status_code=500, detail=f"git fetch failed: {fetch.stderr}")
     branch_name = f"dancodes/{req.session_id}"
     result = _run(
-        ["git", "worktree", "add", "-b", branch_name, dest, req.branch], cwd=repo
+        ["git", "worktree", "add", "-b", branch_name, dest, "origin/main"],
+        cwd=repo,
     )
     if result.returncode != 0:
         raise HTTPException(status_code=500, detail=result.stderr)
-    # Set upstream to origin/main so `git push` just works (the local branch name
-    # is only needed because git requires unique branches per worktree)
+    # Set upstream so `git push origin HEAD:main` is the natural push target,
+    # and `git status` shows ahead/behind vs origin/main
     _run(["git", "config", f"branch.{branch_name}.remote", "origin"], cwd=dest)
     _run(["git", "config", f"branch.{branch_name}.merge", "refs/heads/main"], cwd=dest)
     return {"status": "created", "path": dest}

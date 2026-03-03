@@ -59,12 +59,22 @@ This project is built entirely from a phone, chatting with an llm
   - Reader should encounter purpose before details, not the other way around
   - Exception: types/models must be defined before they're referenced, so they go above endpoints
 
+## Git workflow
+- Each session works in its own worktree on a `dancodes/{sessionId}` branch
+- The sidecar creates worktrees from `origin/main` (fetches first), so sessions always start from the latest code
+- All sessions target `origin/main` — no long-lived branches, no PRs
+- Don't commit or push until the human says so, so that the current session's changes stay visible in git diff/status
+- When pushing:
+  1. `git fetch origin`
+  2. `git rebase origin/main` — resolve any conflicts
+  3. `git push origin HEAD:main`
+  4. If push fails (someone else pushed), repeat from step 1
+
 ## Tests/checks
 - Always run `dev/check` and confirm it passes before committing
   - If it fails, fix the issues and re-run until it passes
   - Don't commit or push with failing checks — the human can't fix these from their phone
 - Before committing, read `BACKLOG.md` and remove any items completed by the commit (we don't keep completed backlog items)
-- Don't commit or push until the human says so, so that the current session's changes stay visible in git diff/status
 
 ## Searching docs and examples
 - Code apis change often — eagerly search with `context7` tool to avoid outdated knowledge

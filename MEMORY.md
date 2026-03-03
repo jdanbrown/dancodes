@@ -11,6 +11,14 @@
 - 2026-02-28 32452fe
 
 ## Memory log
+- [2026-03-03] Worktrees must branch from `origin/main`, not local `main`
+  - The repo clone's local `main` goes stale (never fetched after initial clone)
+  - Sidecar now does `git fetch origin` before `git worktree add ... origin/main`
+  - Previously branched from local `main`, which caused a session to start on pre-React-rewrite code
+- [2026-03-03] Git push workflow: `git fetch origin && git rebase origin/main && git push origin HEAD:main`
+  - Sessions work on `dancodes/{sessionId}` branches, but all target `origin/main`
+  - If push fails (concurrent session pushed), retry the fetch+rebase+push cycle
+  - See AGENTS.md "Git workflow" for the canonical instructions
 - [2026-03-02] Frontend rewrite: vanilla JS → React + Vite + TypeScript
   - Source in `frontend/src/`, built to `frontend/dist/` via `npx vite build frontend/`
   - Caddy serves `frontend/dist/` (not `frontend/` directly)
@@ -44,7 +52,6 @@
   - `--print-logs` required to see logs on stderr (otherwise logs go to `~/.local/share/opencode/log/` only)
   - Treats CWD as project root — we now start it in `/tmp/opencode-no-project` so any request missing `x-opencode-directory` fails loudly
   - `HOME` is used as starting dir for opencode web UI's "Open project" folder picker — set it to `/vol/projects/worktrees` so worktrees are discoverable
-- [2026-03-01] ~~Frontend rendering pitfall~~ (DEFUNCT — React handles this now)
 - [2026-02-28] Replaced bun with real node in Dockerfile
   - Previously: bun installed, `ln -s bun node` to satisfy opencode's `#!/usr/bin/env node` shebang
   - Now: real node via nodesource apt repo, no bun — same `node`/`npm`/`npx` commands in local dev and prod

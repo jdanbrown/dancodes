@@ -9,9 +9,9 @@
 - [2026-03-02] Figure out how to connect from opencode cli — i think custom auth currently defeats it?
 - [2026-03-02] Add opt+enter for newline in edit box — currently have shift+enter which we want to keep, but opt+enter sometimes gets used too and currently sends the msg
 - [2026-03-02] Fix dev/check in prod — currently missing a bunch of deps
+- [2026-03-03] Frontend disconnect/reconnect doesn't reflect interim progress — after closing and reopening the browser, the UI shows no updates that happened while disconnected
 - [2026-03-02] Iron out git commit/push flow
   - Author is still whack
-  - Worktrees require branches, but we don't want to think about branches yet. Currently they're all using a throwaway local branch and pushing to origin/main
 - [2026-03-02] Don't show subagent sessions in sidebar — how should we show them? (click to view?)
 - [2026-03-02] Allow typing input while LLM is in progress — what should it do if you hit enter? What does OpenCode CLI do? That'd be a good UX to mimic if feasible
 - [2026-03-01] Update formatting on backend python logging to be not horribly ugly and hard to read

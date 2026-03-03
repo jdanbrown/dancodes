@@ -261,7 +261,6 @@ export async function startNewSession(): Promise<string | null> {
     const wt = (await post("/admin/worktrees", {
       repo: state.currentRepo.name,
       session_id: wtId,
-      branch: "main",
     })) as { path: string };
 
     const session = (await post("/session", undefined, { directory: wt.path })) as Session;
