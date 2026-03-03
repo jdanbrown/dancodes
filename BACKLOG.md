@@ -1,4 +1,28 @@
 # Backlog (see AGENTS.md)
+- [2026-03-03] Add image uploads
+- [2026-03-03] Doesn’t load on iOS safari, but loads on “save to Home Screen” (which is basically just safari), and loads in iOS chrome and iOS Firefox
+  - Did I end up with bad local storage?
+  - I tried delete site data for fly.dev in iOS settings → apps → safari → advanced, but it still doesn’t load
+- [2026-03-03] Can’t drag to select text because swipe gesture happens when I try to drag right
+  - Can we de-conflict these, or do we need to remove the swipe gesture?
+- [2026-03-03] Can’t insert newline on mobile
+  - Make enter do newline, and require button press to send
+- [2026-03-03] Long press on user input for copy/revert/fork
+- [2026-03-03] Send button sometimes refuses to trigger during multi-round chat session
+  - Maybe after I press stop? But I think not?
+- [2026-03-03] Version text in bottom of left sidebar should be above iPhone safe area
+- [2026-03-03] Bash tool outputs should stream
+  - Currently it just shows “bash” with a blinking cursor until the full output is done
+  - Awful UX, I keep thinking it’s hung
+- [2026-03-03] Bash tool should show command too
+  - Currently just shows command output
+- [2026-03-03] Audit tool call outputs, what to show/hide/collapse
+  - File reads: hide
+  - bash: show
+  - subagent summary: hide
+  - file edits/writes: show — add highlighting
+  - todo: show — add formatting
+  - question: show — currently these just show “question” and blinking cursor and hang (“stop” instead of “send”)
 - [2026-03-02] Style: More white-on-black, all this medium gray is hard to see
 - [2026-03-02] Find way to make llmjail use local Dockerfile? — what's the right Dockerfile/script interface to merge these?
 - [2026-03-02] To make dev/check faster for llm, can we run it in dev/docker-shell instead of llmjail (bash tool)?
@@ -11,7 +35,8 @@
 - [2026-03-02] Figure out how to connect from opencode cli — i think custom auth currently defeats it?
 - [2026-03-02] Add opt+enter for newline in edit box — currently have shift+enter which we want to keep, but opt+enter sometimes gets used too and currently sends the msg
 - [2026-03-02] Fix dev/check in prod — currently missing a bunch of deps
-- [2026-03-03] Frontend disconnect/reconnect doesn't reflect interim progress — after closing and reopening the browser, the UI shows no updates that happened while disconnected
+- [2026-03-02] Frontend disconnect/reconnect doesn't reflect interim progress
+  - After closing and reopening the browser, the UI shows no updates that happened while disconnected
 - [2026-03-02] Iron out git commit/push flow
   - Author is still whack
 - [2026-03-02] Don't show subagent sessions in sidebar — how should we show them? (click to view?)
