@@ -1,4 +1,5 @@
 # Backlog (see AGENTS.md)
+- [2026-03-04] Show git stat in sidebar for each session (so we can spot clean vs. dirty)
 - [2026-03-04] Show token totals in the top bar
 - [2026-03-04] Show timestamps on each chat output (alongside tokens)
 - [2026-03-04] Replace em-dashes and smart quotes in .md files with ascii — opencode edit tool chokes on fancy chars (converted by read tool, or something)
