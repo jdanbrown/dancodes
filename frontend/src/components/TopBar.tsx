@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { RotateCw, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { cloneAndSelectRepo, loadRepoPickerData, selectRepo, setSidebarOpen, useStore } from "../lib/store";
 
@@ -19,6 +19,9 @@ export function TopBar() {
       </div>
       <span className="top-bar-spacer" />
       <EnvToggle />
+      <span className="top-bar-btn" onClick={() => window.location.reload()}>
+        <RotateCw size={14} />
+      </span>
     </div>
   );
 }
