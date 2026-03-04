@@ -4,7 +4,6 @@
 - [2026-03-04] Show timestamps on each chat output (alongside tokens)
 - [2026-03-04] Replace em-dashes and smart quotes in .md files with ascii — opencode edit tool chokes on fancy chars (converted by read tool, or something)
 - [2026-03-03] Fix: Scroll in chat doesn't follow when new content appears (only follow when scroll is at bottom, don't jank if scrolled up somewhere)
-- [2026-03-03] Default model and favorite models keeps reverting — should all be client-side state, right?
 - [2026-03-03] Support opencode tui theme json files, and put in my ~/.opencode/themes/jdanbrown.json
 - [2026-03-03] Add way to view subagent sessions (since we removed them from sidebar session list)
   - Show small text button in top bar that user can tap to view subagent sessions (like how we'll do git stat/diff)

@@ -1,5 +1,6 @@
 // localStorage helpers with safe JSON parse
 
+import { DEFAULT_FAVORITE_MODELS, DEFAULT_MODEL } from "./default_favorite_models";
 import type { Repo, SelectedModel } from "./types";
 
 const LS_LAST_REPO = "dancodes:lastRepo";
@@ -35,8 +36,12 @@ export function saveLastSession(id: string) {
   safeSet(LS_LAST_SESSION, id);
 }
 
-export function loadLastModel(): SelectedModel | null {
-  return safeGet<SelectedModel>(LS_LAST_MODEL);
+export function loadLastModel(): SelectedModel {
+  const saved = safeGet<SelectedModel>(LS_LAST_MODEL);
+  if (saved) return saved;
+  // Parse "provider/model" key into a SelectedModel
+  const sep = DEFAULT_MODEL.indexOf("/");
+  return { providerID: DEFAULT_MODEL.slice(0, sep), modelID: DEFAULT_MODEL.slice(sep + 1), name: "" };
 }
 export function saveLastModel(model: SelectedModel) {
   safeSet(LS_LAST_MODEL, model);
@@ -50,7 +55,7 @@ export function saveSessionDirs(dirs: Record<string, string>) {
 }
 
 export function loadFavorites(): string[] {
-  return safeGet<string[]>(LS_FAVORITES) ?? [];
+  return safeGet<string[]>(LS_FAVORITES) ?? DEFAULT_FAVORITE_MODELS;
 }
 export function saveFavorites(favs: string[]) {
   safeSet(LS_FAVORITES, favs);
