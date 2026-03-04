@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -eu
+
+function show_cmd() {
+  # Use 2>/dev/null with tput to silence this headless error: "tput: No value for $TERM and no -T specified"
+  black="$(tput setaf 0 2>/dev/null || true)"
+  off="$(tput sgr0 2>/dev/null || true)"
+  echo -e "$black\$" "$@" "$off" >&2
+  "$@"
+}
+
+show_cmd rsvg-convert -w 180 -h 180 'favicon.svg' -o 'favicon.png'
